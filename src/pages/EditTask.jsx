@@ -25,49 +25,52 @@ export const EditTask = () => {
       done: isDone
     }
 
-    axios.put(`${url}/lists/${listId}/tasks/${taskId}`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then((res) => {
-      console.log(res.data)
-      navigate("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`更新に失敗しました。${err}`);
-    })
+    axios
+      .put(`https://${url}/lists/${listId}/tasks/${taskId}`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`更新に失敗しました。${err}`);
+      });
   }
 
   const onDeleteTask = () => {
-    axios.delete(`${url}/lists/${listId}/tasks/${taskId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`削除に失敗しました。${err}`);
-    })
+    axios
+      .delete(`https://${url}/lists/${listId}/tasks/${taskId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`削除に失敗しました。${err}`);
+      });
   }
 
   useEffect(() => {
-    axios.get(`${url}/lists/${listId}/tasks/${taskId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then((res) => {
-      const task = res.data
-      setTitle(task.title)
-      setDetail(task.detail)
-      setIsDone(task.done)
-    })
-    .catch((err) => {
-      setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
-    })
+    axios
+      .get(`https://${url}/lists/${listId}/tasks/${taskId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((res) => {
+        const task = res.data;
+        setTitle(task.title);
+        setDetail(task.detail);
+        setIsDone(task.done);
+      })
+      .catch((err) => {
+        setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
+      });
   }, [])
 
   return (

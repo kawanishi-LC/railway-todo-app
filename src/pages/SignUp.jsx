@@ -27,7 +27,8 @@ export const SignUp = () => {
       password: password
     };
 
-    axios.post(`${url}/users`, data)
+    axios
+      .post(`https://${url}/users`, data)
       .then((res) => {
         const token = res.data.token;
         dispatch(signIn());
@@ -36,7 +37,7 @@ export const SignUp = () => {
       })
       .catch((err) => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
-      })
+      });
 
       if(auth) return <Navigate to="/" replace />;
   }

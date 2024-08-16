@@ -20,7 +20,8 @@ export const SignIn = () => {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const onSignIn = () => {
-    axios.post(`${url}/signin`, {email: email, password: password})
+    axios
+      .post(`https://${url}/signin`, { email: email, password: password })
       .then((res) => {
         setCookie("token", res.data.token);
         dispatch(signIn());
@@ -28,7 +29,7 @@ export const SignIn = () => {
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`);
-      })
+      });
   }
 
   if(auth) return <Navigate to="/" replace />;

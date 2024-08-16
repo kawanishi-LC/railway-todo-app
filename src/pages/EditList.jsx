@@ -18,46 +18,49 @@ export const EditList = () => {
       title: title
     }
 
-    axios.put(`${url}/lists/${listId}`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((err) => {
-    setErrorMessage(`更新に失敗しました。 ${err}`);
-    })
+    axios
+      .put(`https://${url}/lists/${listId}`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`更新に失敗しました。 ${err}`);
+      });
   }
 
   const onDeleteList = () => {
-    axios.delete(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`削除に失敗しました。${err}`);
-    })
+    axios
+      .delete(`https://${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`削除に失敗しました。${err}`);
+      });
   }
 
   useEffect(() => {
-    axios.get(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then((res) => {
-      const list = res.data;
-      setTitle(list.title);
-    })
-    .catch((err) => {
-      setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
-    })
+    axios
+      .get(`https://${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((res) => {
+        const list = res.data;
+        setTitle(list.title);
+      })
+      .catch((err) => {
+        setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
+      });
   }, [])
 
   return (

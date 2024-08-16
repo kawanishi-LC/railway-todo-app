@@ -17,17 +17,18 @@ export const NewList = () => {
       title: title
     }
 
-    axios.post(`${url}/lists`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`リストの作成に失敗しました。${err}`);
-    })
+    axios
+      .post(`https://${url}/lists`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`リストの作成に失敗しました。${err}`);
+      });
   }
 
   return (

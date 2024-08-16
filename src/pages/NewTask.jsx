@@ -24,32 +24,34 @@ export const NewTask = () => {
       done: false,
     };
 
-    axios.post(`${url}/lists/${selectListId}/tasks`, data, {
+    axios
+      .post(`https://${url}/lists/${selectListId}/tasks`, data, {
         headers: {
-          authorization: `Bearer ${cookies.token}`
-        }
-    })
-    .then(() => {
-      navigate("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`タスクの作成に失敗しました。${err}`);
-    })
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        setErrorMessage(`タスクの作成に失敗しました。${err}`);
+      });
   }
 
   useEffect(() => {
-    axios.get(`${url}/lists`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
-    .then((res) => {
-      setLists(res.data)
-      setSelectListId(res.data[0]?.id)
-    })
-    .catch((err) => {
-      setErrorMessage(`リストの取得に失敗しました。${err}`);
-    })
+    axios
+      .get(`https://${url}/lists`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
+      .then((res) => {
+        setLists(res.data);
+        setSelectListId(res.data[0]?.id);
+      })
+      .catch((err) => {
+        setErrorMessage(`リストの取得に失敗しました。${err}`);
+      });
   }, [])
 
   return (
