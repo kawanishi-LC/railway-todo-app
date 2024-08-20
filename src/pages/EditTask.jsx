@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { url } from "../const";
 import { useNavigate, useParams } from "react-router-dom";
-import "./editTask.css"
+import "./editTask.scss";
 
 export const EditTask = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export const EditTask = () => {
     }
 
     axios
-      .put(`https://${url}/lists/${listId}/tasks/${taskId}`, data, {
+      .put(`${url}/lists/${listId}/tasks/${taskId}`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -42,7 +42,7 @@ export const EditTask = () => {
 
   const onDeleteTask = () => {
     axios
-      .delete(`https://${url}/lists/${listId}/tasks/${taskId}`, {
+      .delete(`${url}/lists/${listId}/tasks/${taskId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -57,7 +57,7 @@ export const EditTask = () => {
 
   useEffect(() => {
     axios
-      .get(`https://${url}/lists/${listId}/tasks/${taskId}`, {
+      .get(`${url}/lists/${listId}/tasks/${taskId}`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

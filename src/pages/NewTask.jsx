@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
-import "./newTask.css"
+import "./newTask.scss";
 import { useNavigate } from "react-router-dom";
 
 export const NewTask = () => {
@@ -25,7 +25,7 @@ export const NewTask = () => {
     };
 
     axios
-      .post(`https://${url}/lists/${selectListId}/tasks`, data, {
+      .post(`${url}/lists/${selectListId}/tasks`, data, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -40,7 +40,7 @@ export const NewTask = () => {
 
   useEffect(() => {
     axios
-      .get(`https://${url}/lists`, {
+      .get(`${url}/lists`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

@@ -4,8 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
-import "./home.css";
-
+import "./home.scss";
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -15,9 +14,11 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+  console.log(url)
+
   useEffect(() => {
     axios
-      .get(`https://${url}/lists`, {
+      .get(`${url}/lists`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },
@@ -35,7 +36,7 @@ export const Home = () => {
     if(typeof listId !== "undefined"){
       setSelectListId(listId)
       axios
-        .get(`https://${url}/lists/${listId}/tasks`, {
+        .get(`${url}/lists/${listId}/tasks`, {
           headers: {
             authorization: `Bearer ${cookies.token}`,
           },
@@ -52,7 +53,7 @@ export const Home = () => {
   const handleSelectList = (id) => {
     setSelectListId(id);
     axios
-      .get(`https://${url}/lists/${id}/tasks`, {
+      .get(`${url}/lists/${id}/tasks`, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
         },

@@ -6,7 +6,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { signIn } from "../authSlice";
 import { Header } from "../components/Header";
 import { url } from "../const";
-import "./signUp.css";
+import "./signUp.scss";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const SignUp = () => {
     };
 
     axios
-      .post(`https://${url}/users`, data)
+      .post(`${url}/users`, data)
       .then((res) => {
         const token = res.data.token;
         dispatch(signIn());
