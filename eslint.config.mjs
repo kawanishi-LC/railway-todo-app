@@ -19,6 +19,7 @@ export default [
     },
       rules: {
       ...pluginReact.configs.flat['jsx-runtime'].rules,
+        'react/prop-types': 0,
     },
     settings: {
       react: {

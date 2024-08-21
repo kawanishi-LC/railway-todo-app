@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -24,7 +24,7 @@ export const SignUp = () => {
     const data = {
       email: email,
       name: name,
-      password: password
+      password: password,
     };
 
     axios
@@ -39,8 +39,8 @@ export const SignUp = () => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
       });
 
-      if(auth) return <Navigate to="/" replace />;
-  }
+    if (auth) return <Navigate to="/" replace />;
+  };
   return (
     <div>
       <Header />
@@ -48,15 +48,35 @@ export const SignUp = () => {
         <h2>新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="signup-form">
-          <label>メールアドレス</label><br />
-          <input type="email" onChange={handleEmailChange} className="email-input" /><br />
-          <label>ユーザ名</label><br />
-          <input type="text" onChange={handleNameChange} className="name-input" /><br />
-          <label>パスワード</label><br />
-          <input type="password" onChange={handlePasswordChange} className="password-input" /><br />
-          <button type="button" onClick={onSignUp} className="signup-button">作成</button>
+          <label>メールアドレス</label>
+          <br />
+          <input
+            type="email"
+            onChange={handleEmailChange}
+            className="email-input"
+          />
+          <br />
+          <label>ユーザ名</label>
+          <br />
+          <input
+            type="text"
+            onChange={handleNameChange}
+            className="name-input"
+          />
+          <br />
+          <label>パスワード</label>
+          <br />
+          <input
+            type="password"
+            onChange={handlePasswordChange}
+            className="password-input"
+          />
+          <br />
+          <button type="button" onClick={onSignUp} className="signup-button">
+            作成
+          </button>
         </form>
       </main>
     </div>
-  )
-}
+  );
+};

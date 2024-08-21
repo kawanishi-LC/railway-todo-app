@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { url } from "../const";
@@ -36,7 +36,7 @@ export const NewTask = () => {
       .catch((err) => {
         setErrorMessage(`タスクの作成に失敗しました。${err}`);
       });
-  }
+  };
 
   useEffect(() => {
     axios
@@ -52,7 +52,7 @@ export const NewTask = () => {
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -61,19 +61,44 @@ export const NewTask = () => {
         <h2>タスク新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-task-form">
-          <label>リスト</label><br />
-          <select onChange={(e) => handleSelectList(e.target.value)} className="new-task-select-list">
+          <label>リスト</label>
+          <br />
+          <select
+            onChange={(e) => handleSelectList(e.target.value)}
+            className="new-task-select-list"
+          >
             {lists.map((list, key) => (
-              <option key={key} className="list-item" value={list.id}>{list.title}</option>
+              <option key={key} className="list-item" value={list.id}>
+                {list.title}
+              </option>
             ))}
-          </select><br />
-          <label>タイトル</label><br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" /><br />
-          <label>詳細</label><br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" /><br />
-          <button type="button" className="new-task-button" onClick={onCreateTask}>作成</button>
+          </select>
+          <br />
+          <label>タイトル</label>
+          <br />
+          <input
+            type="text"
+            onChange={handleTitleChange}
+            className="new-task-title"
+          />
+          <br />
+          <label>詳細</label>
+          <br />
+          <textarea
+            type="text"
+            onChange={handleDetailChange}
+            className="new-task-detail"
+          />
+          <br />
+          <button
+            type="button"
+            className="new-task-button"
+            onClick={onCreateTask}
+          >
+            作成
+          </button>
         </form>
       </main>
     </div>
-  )
-}
+  );
+};

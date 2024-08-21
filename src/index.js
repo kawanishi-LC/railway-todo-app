@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
-import { store } from "./store"
+import { store } from "./store";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
