@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Header } from "../components/Header";
-import axios from "axios";
-import { useCookies } from "react-cookie";
-import { url } from "../const";
 import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
+import { Header } from "../components/Header";
+import { url } from "../const";
 import "./editTask.scss";
 
 export const EditTask = () => {
@@ -14,9 +14,11 @@ export const EditTask = () => {
   const [detail, setDetail] = useState("");
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
+  
   const onUpdateTask = () => {
     console.log(isDone);
     const data = {

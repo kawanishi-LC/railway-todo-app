@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./editList.scss";
@@ -12,7 +12,9 @@ export const EditList = () => {
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
+
   const handleTitleChange = (e) => setTitle(e.target.value);
+  
   const onUpdateList = () => {
     const data = {
       title: title,

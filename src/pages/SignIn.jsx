@@ -1,12 +1,12 @@
 import { useState } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
 import { useNavigate, Navigate, Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import { Header } from "../components/Header";
-import "./signin.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../authSlice";
 import { url } from "../const";
+import "./signin.scss";
 
 export const SignIn = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
@@ -15,9 +15,11 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState();
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+
   const onSignIn = () => {
     axios
       .post(`${url}/signin`, { email: email, password: password })
@@ -28,6 +30,7 @@ export const SignIn = () => {
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`);
+        console.log(err.message); 
       });
   };
 

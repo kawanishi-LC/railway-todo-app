@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Header } from "../components/Header";
-import { useNavigate } from "react-router-dom";
 import { url } from "../const";
 import "./newList.scss";
 
@@ -11,7 +11,9 @@ export const NewList = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
   const handleTitleChange = (e) => setTitle(e.target.value);
+  
   const onCreateList = () => {
     const data = {
       title: title,

@@ -1,25 +1,27 @@
-import axios from "axios";
 import { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
-import { signIn } from "../authSlice";
+import axios from "axios";
 import { Header } from "../components/Header";
+import { signIn } from "../authSlice";
 import { url } from "../const";
 import "./signUp.scss";
 
 export const SignUp = () => {
-  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth.isSignIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessge] = useState();
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [, setCookie] = useCookies();
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+
   const onSignUp = () => {
     const data = {
       email: email,
@@ -31,8 +33,8 @@ export const SignUp = () => {
       .post(`${url}/users`, data)
       .then((res) => {
         const token = res.data.token;
-        dispatch(signIn());
         setCookie("token", token);
+        dispatch(signIn());
         navigate("/");
       })
       .catch((err) => {
@@ -41,6 +43,7 @@ export const SignUp = () => {
 
     if (auth) return <Navigate to="/" replace />;
   };
+  
   return (
     <div>
       <Header />
