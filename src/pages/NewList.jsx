@@ -13,7 +13,7 @@ export const NewList = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleTitleChange = (e) => setTitle(e.target.value);
-  
+
   const onCreateList = () => {
     const data = {
       title: title,

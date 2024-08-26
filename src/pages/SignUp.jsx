@@ -43,7 +43,7 @@ export const SignUp = () => {
 
     if (auth) return <Navigate to="/" replace />;
   };
-  
+
   return (
     <div>
       <Header />

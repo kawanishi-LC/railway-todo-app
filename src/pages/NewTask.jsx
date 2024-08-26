@@ -11,19 +11,25 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [limit, setLimit] = useState("");  //追加*ローカルタイムゾーン
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
   const navigate = useNavigate();
-  
+
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
-
+  const handleLimitChange = (e) => setLimit(e.target.value);  //追加
+  
   const onCreateTask = () => {
+    console.log(limit)
+    const formatLimit = new Date(limit).toISOString();  //追加*ISO8601形式へ*UTC時刻
+    console.log(formatLimit)
     const data = {
       title: title,
       detail: detail,
       done: false,
+      limit: formatLimit,  //追加
     };
 
     axios
@@ -81,6 +87,14 @@ export const NewTask = () => {
           <input
             type="text"
             onChange={handleTitleChange}
+            className="new-task-title"
+          />
+          <br />
+          <label>期限</label>
+          <br />
+          <input
+            type="datetime-local"
+            onChange={handleLimitChange}
             className="new-task-title"
           />
           <br />

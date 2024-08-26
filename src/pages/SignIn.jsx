@@ -25,12 +25,13 @@ export const SignIn = () => {
       .post(`${url}/signin`, { email: email, password: password })
       .then((res) => {
         setCookie("token", res.data.token);
+        console.log(res.data);
         dispatch(signIn());
         navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`);
-        console.log(err.message); 
+        console.log(err.message);
       });
   };
 

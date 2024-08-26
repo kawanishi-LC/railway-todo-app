@@ -5,6 +5,13 @@ import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.scss";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Tokyo");
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -13,7 +20,7 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
-  
+
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   console.log(url);
 
@@ -25,7 +32,8 @@ export const Home = () => {
         },
       })
       .then((res) => {
-        setLists(res.data);
+        setLists(res.data);  //lists=リスト一覧
+        console.log(res.data);
       })
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
@@ -43,7 +51,8 @@ export const Home = () => {
           },
         })
         .then((res) => {
-          setTasks(res.data.tasks);
+          setTasks(res.data.tasks);  //tasks=タスク一覧
+          console.log(res.data.tasks);
         })
         .catch((err) => {
           setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -60,7 +69,8 @@ export const Home = () => {
         },
       })
       .then((res) => {
-        setTasks(res.data.tasks);
+        setTasks(res.data.tasks);  //tasks=タスク一覧
+        console.log(res.data.tasks);  
       })
       .catch((err) => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -146,6 +156,10 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? "完了" : "未完了"}
+                <br />
+                期限：{dayjs(task.limit).tz().format("YYYY/MM/DD HH:mm")}
+                <br />
+                残り日時：{dayjs(task.limit).diff(dayjs())}
               </Link>
             </li>
           ))}
@@ -168,6 +182,10 @@ const Tasks = (props) => {
               {task.title}
               <br />
               {task.done ? "完了" : "未完了"}
+              <br />
+              期限：{dayjs(task.limit).format("YYYY/MM/DD HH:mm")}
+              <br />
+              残り日時：{dayjs(task.limit).diff(dayjs())}
             </Link>
           </li>
         ))}

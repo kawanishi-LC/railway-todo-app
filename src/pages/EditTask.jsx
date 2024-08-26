@@ -5,6 +5,13 @@ import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./editTask.scss";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Tokyo")
 
 export const EditTask = () => {
   const navigate = useNavigate();
@@ -12,19 +19,23 @@ export const EditTask = () => {
   const [cookies] = useCookies();
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  const [limit, setLimit] = useState(""); //追加*ローカルタイムゾーン
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
-  
+  const handleLimitChange = (e) => setLimit(e.target.value); //追加
+
   const onUpdateTask = () => {
     console.log(isDone);
+    const formatLimit = new Date(limit).toISOString(); //追加*ISO8601形式へ*UTC時刻
     const data = {
       title: title,
       detail: detail,
       done: isDone,
+      limit: formatLimit,
     };
 
     axios
@@ -69,6 +80,9 @@ export const EditTask = () => {
         setTitle(task.title);
         setDetail(task.detail);
         setIsDone(task.done);
+        console.log(task.limit);
+        setLimit(dayjs(task.limit).tz().format("YYYY-MM-DDTHH:mm"));  //追加*タイムゾーン変換
+        console.log(dayjs(task.limit).tz().format("YYYY-MM-DDTHH:mm"));
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
@@ -89,6 +103,15 @@ export const EditTask = () => {
             onChange={handleTitleChange}
             className="edit-task-title"
             value={title}
+          />
+          <br />
+          <label>期限</label>
+          <br />
+          <input
+            type="datetime-local"
+            onChange={handleLimitChange}
+            className="edit-task-title"
+            value={limit}
           />
           <br />
           <label>詳細</label>

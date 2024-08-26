@@ -14,7 +14,7 @@ export const EditList = () => {
   const [cookies] = useCookies();
 
   const handleTitleChange = (e) => setTitle(e.target.value);
-  
+
   const onUpdateList = () => {
     const data = {
       title: title,
