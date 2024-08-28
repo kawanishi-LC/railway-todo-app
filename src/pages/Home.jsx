@@ -141,54 +141,69 @@ const Tasks = (props) => {
   if (tasks === null) return <></>;
 
   if (isDoneDisplay === "done") {
+    const filtertask = tasks.filter((task) => {return task.done === true;})
+    const listitems = filtertask.map((task, key) => (
+      <li key={key} className="task-item">
+          <Link
+            to={`/lists/${selectListId}/tasks/${task.id}`}
+            className="task-item-link"
+          >
+            {task.title}
+            <br />
+            {task.done ? "完了" : "未完了"}
+            <br />
+            期限：{dayjs(task.limit).tz().format("YYYY/MM/DD HH:mm")}
+            <br />
+            残り日時：{secToDateTime(dayjs(task.limit).diff(dayjs()))}
+          </Link>
+      </li>
+    ))
+
     return (
       <ul>
-        {tasks
-          .filter((task) => {
-            return task.done === true;
-          })
-          .map((task, key) => (
-            <li key={key} className="task-item">
-              <Link
-                to={`/lists/${selectListId}/tasks/${task.id}`}
-                className="task-item-link"
-              >
-                {task.title}
-                <br />
-                {task.done ? "完了" : "未完了"}
-                <br />
-                期限：{dayjs(task.limit).tz().format("YYYY/MM/DD HH:mm")}
-                <br />
-                残り日時：{dayjs(task.limit).diff(dayjs())}
-              </Link>
-            </li>
-          ))}
+        {listitems}
       </ul>
     );
   }
 
+  const filtertask = tasks.filter((task) => {return task.done === false;})
+  const listitems = filtertask.map((task, key) => (
+    <li key={key} className="task-item">
+      <Link
+        to={`/lists/${selectListId}/tasks/${task.id}`}
+        className="task-item-link"
+      >
+        {task.title}
+        <br />
+        {task.done ? "完了" : "未完了"}
+        <br />
+        期限：{dayjs(task.limit).format("YYYY/MM/DD HH:mm")}
+        <br />
+        残り日時：{secToDateTime(dayjs(task.limit).diff(dayjs()))}
+      </Link>
+    </li>
+  ));      
+
   return (
     <ul>
-      {tasks
-        .filter((task) => {
-          return task.done === false;
-        })
-        .map((task, key) => (
-          <li key={key} className="task-item">
-            <Link
-              to={`/lists/${selectListId}/tasks/${task.id}`}
-              className="task-item-link"
-            >
-              {task.title}
-              <br />
-              {task.done ? "完了" : "未完了"}
-              <br />
-              期限：{dayjs(task.limit).format("YYYY/MM/DD HH:mm")}
-              <br />
-              残り日時：{dayjs(task.limit).diff(dayjs())}
-            </Link>
-          </li>
-        ))}
+      {listitems}
     </ul>
   );
 };
+
+function secToDateTime(miliSeconds) {
+  const day = Math.floor(miliSeconds/1000 / 86400);
+  const hour = Math.floor((miliSeconds/1000 % 86400) / 3600);
+  const min = Math.floor((miliSeconds/1000 % 3600) / 60);
+  let time = "";
+  // day が 0 の場合は「日」は出力しない（hour や min も同様）
+  if (day !== 0) {
+    time = `${day}日${hour}時間${min}分`;
+  } else if (hour !== 0) {
+    time = `${hour}時間${min}分`;
+  } else {
+    time = `${min}分`;
+  }
+  return time;
+}
+ 

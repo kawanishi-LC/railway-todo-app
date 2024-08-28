@@ -95,7 +95,7 @@ export const NewTask = () => {
           <input
             type="datetime-local"
             onChange={handleLimitChange}
-            className="new-task-title"
+            className="new-task-limit"
           />
           <br />
           <label>詳細</label>

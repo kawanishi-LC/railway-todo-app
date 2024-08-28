@@ -110,7 +110,7 @@ export const EditTask = () => {
           <input
             type="datetime-local"
             onChange={handleLimitChange}
-            className="edit-task-title"
+            className="edit-task-limit"
             value={limit}
           />
           <br />
