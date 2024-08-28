@@ -76,6 +76,7 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
+  
   return (
     <div>
       <Header />
