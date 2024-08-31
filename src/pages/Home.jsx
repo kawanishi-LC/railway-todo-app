@@ -17,6 +17,7 @@ export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
   const [selectListId, setSelectListId] = useState();
+  const [selectListTitle, setSelectListTitle] = useState();
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
@@ -42,8 +43,10 @@ export const Home = () => {
 
   useEffect(() => {
     const listId = lists[0]?.id;
+    const listTitle = lists[0]?.title
     if (typeof listId !== "undefined") {
       setSelectListId(listId);
+      setSelectListTitle(listTitle);
       axios
         .get(`${url}/lists/${listId}/tasks`, {
           headers: {
@@ -60,8 +63,9 @@ export const Home = () => {
     }
   }, [lists]);
 
-  const handleSelectList = (id) => {
+  const handleSelectList = (id, title) => {
     setSelectListId(id);
+    setSelectListTitle(title);
     axios
       .get(`${url}/lists/${id}/tasks`, {
         headers: {
@@ -96,14 +100,19 @@ export const Home = () => {
               </p>
             </div>
           </div>
-          <ul className="list-tab">
+          <ul className="list-tab" role="tablist">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
                 <li
+                  role="tab"
+                  id={list.title}
+                  aria-controls={`${list.title}のタスク一覧`}
+                  tabIndex="0"
                   key={key}
                   className={`list-tab-item ${isActive ? "active" : ""}`}
-                  onClick={() => handleSelectList(list.id)}
+                  onClick={() => handleSelectList(list.id, list.title)}
+                  onKeyDown={() => handleSelectList(list.id, list.title)}
                 >
                   {list.title}
                 </li>
@@ -128,6 +137,7 @@ export const Home = () => {
               tasks={tasks}
               selectListId={selectListId}
               isDoneDisplay={isDoneDisplay}
+              selectListTitle={selectListTitle}
             />
           </div>
         </div>
@@ -138,7 +148,7 @@ export const Home = () => {
 
 // 表示するタスク
 const Tasks = (props) => {
-  const { tasks, selectListId, isDoneDisplay } = props;
+  const { tasks, selectListId, isDoneDisplay, selectListTitle } = props;
   if (tasks === null) return <></>;
 
   if (isDoneDisplay === "done") {
@@ -161,7 +171,12 @@ const Tasks = (props) => {
     ))
 
     return (
-      <ul>
+      <ul
+        role="tabpanel"
+        id={`${selectListTitle}のタスク一覧`}
+        aria-labelledby={selectListTitle}
+        tabIndex="0"
+      >
         {listitems}
       </ul>
     );
@@ -186,7 +201,12 @@ const Tasks = (props) => {
   ));      
 
   return (
-    <ul>
+    <ul
+      role="tabpanel"
+      id={`${selectListTitle}のタスク一覧`}
+      aria-labelledby={selectListTitle}
+      tabIndex="0"
+    >
       {listitems}
     </ul>
   );
