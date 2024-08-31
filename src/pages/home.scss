@@ -74,3 +74,41 @@
 .display-select {
   width: 100%;
 }
+
+@media (max-width: 768px){
+  .taskList {
+    margin: 30px auto;
+    list-style: none;
+    width: 768px;
+  }
+
+  .list-tab-item {
+  flex-shrink: 0;
+  width: 70px;
+  padding: 0 15px;
+  text-overflow: normal;
+  margin-right: 5px;
+  border: solid 1px #242f9b;
+  justify-content: center;
+  align-items: center;
+  }  
+}
+
+@media (max-width: 320px){
+  .taskList {
+    margin: 15px auto;
+    list-style: none;
+    width: 320px;
+  }
+
+  .list-tab-item {
+  flex-shrink: 0;
+  width: 30px;
+  padding: 0 10px;
+  text-overflow: normal;
+  margin-right: 5px;
+  border: solid 1px #242f9b;
+  justify-content: center;
+  align-items: center;
+  }
+}

@@ -13,3 +13,19 @@
   color: #ffffff;
   margin: auto 25px auto auto;
 }
+
+@media (max-width: 320px){
+  .header {
+    width: 100%;
+    height: 40px;
+    background-color: #242f9b;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sign-out-button {
+    color: #ffffff;
+    margin: auto 10px auto auto;
+  }
+}
